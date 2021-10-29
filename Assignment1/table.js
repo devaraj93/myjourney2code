@@ -29,11 +29,21 @@ const createTable = async () => {
         arraydata.response.data.records[i].title,
       ]);
       var tr = document.createElement("tr");
+      var tr1 = document.createElement("tr");
+      var tr2 = document.createElement("tr");
       table.appendChild(tr);
+      table.appendChild(tr1);
+      table.appendChild(tr2);
       for (var j = 0; j < dataArray[i].length; j++) {
         var tdElement = document.createElement("td");
+        var tdElement1 = document.createElement("td");
+        var tdElement2 = document.createElement("td");
         tdElement.innerHTML = dataArray[i][j];
+        tdElement1.innerHTML = dataArray[i][j];
+        tdElement2.innerHTML = dataArray[i][j];
         tr.appendChild(tdElement);
+        tr1.appendChild(tdElement1);
+        tr2.appendChild(tdElement2);
       }
     }
   } else {
