@@ -1,5 +1,8 @@
-//Using iffe function
-let arraydata;
+"use strict";
+
+let duplicatearraydata;
+let originalData;
+
 const responseData = async () => {
   try {
     const response = await axios.get(
@@ -12,53 +15,51 @@ const responseData = async () => {
   }
 };
 
-const createTable = async () => {
-  arraydata = await responseData();
-  if (arraydata.isAuthError === true) {
-    var dataArray = [];
-    var table = document.createElement("table");
-    document.body.appendChild(table);
-    console.log(arraydata.response.data.records);
-    for (
-      let i = 0;
-      i < Object.keys(arraydata.response.data.records).length;
-      i++
-    ) {
-      dataArray.push([
-        arraydata.response.data.records[i].id,
-        arraydata.response.data.records[i].title,
-      ]);
-      var tr = document.createElement("tr");
-      var tr1 = document.createElement("tr");
-      var tr2 = document.createElement("tr");
-      table.appendChild(tr);
-      table.appendChild(tr1);
-      table.appendChild(tr2);
-      for (var j = 0; j < dataArray[i].length; j++) {
-        var tdElement = document.createElement("td");
-        var tdElement1 = document.createElement("td");
-        var tdElement2 = document.createElement("td");
-        tdElement.innerHTML = dataArray[i][j];
-        tdElement1.innerHTML = dataArray[i][j];
-        tdElement2.innerHTML = dataArray[i][j];
-        tr.appendChild(tdElement);
-        tr1.appendChild(tdElement1);
-        tr2.appendChild(tdElement2);
+const getTableData = async () => {
+  originalData = await responseData();
+  const duplicateN = 3;
+  var duplicatedata = [];
+  if (originalData.isAuthError === true) {
+    for (let i = 0; i < duplicateN; i++) {
+      for (
+        let i = 0;
+        i < Object.keys(originalData.response.data.records).length;
+        i++
+      ) {
+        duplicatedata.push([
+          originalData.response.data.records[i].id,
+          originalData.response.data.records[i].title,
+        ]);
       }
     }
   } else {
     var errormtag = document.createElement("h2");
-    errormtag.textContent = arraydata.error.message;
+    errormtag.textContent = originalData.error.message;
     document.body.appendChild(errormtag);
+  }
+  console.log(duplicatedata);
+  return duplicatedata;
+};
+
+const createTable = async () => {
+  duplicatearraydata = await getTableData();
+
+  console.log(duplicatearraydata[0], "----+++++++");
+  var table = document.createElement("table");
+  document.body.appendChild(table);
+
+  for (let i = 0; i < duplicatearraydata.length; i++) {
+    var tr = document.createElement("tr");
+    table.appendChild(tr);
+    for (var j = 0; j < duplicatearraydata[i].length; j++) {
+      var tdElement = document.createElement("td");
+      tdElement.innerHTML = duplicatearraydata[i][j];
+      tr.appendChild(tdElement);
+    }
   }
 };
 
 createTable();
-
-function createRow() {
-  let tr = document.createElement("tr");
-  return tr;
-}
 
 function searchFilter() {
   var tr, td, searchvalue, textValue;
@@ -74,7 +75,6 @@ function searchFilter() {
       .textContent.toUpperCase()
       .replace(/ /g, "");
     if (textValue.indexOf(searchvalue) > -1) {
-      console.log(textValue.includes(""));
       tr[i].style.display = "";
     } else {
       tr[i].style.display = "none";
