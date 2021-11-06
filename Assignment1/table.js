@@ -10,7 +10,6 @@ const responseData = async () => {
     );
     return { response, isAuthError: true };
   } catch (error) {
-    console.log(error.message);
     return { error, isAuthError: false };
   }
 };
@@ -19,6 +18,7 @@ const getTableData = async () => {
   originalData = await responseData();
   const duplicateN = 3;
   var duplicatedata = [];
+  var k = 1;
   if (originalData.isAuthError === true) {
     for (let i = 0; i < duplicateN; i++) {
       for (
@@ -26,10 +26,7 @@ const getTableData = async () => {
         i < Object.keys(originalData.response.data.records).length;
         i++
       ) {
-        duplicatedata.push([
-          originalData.response.data.records[i].id,
-          originalData.response.data.records[i].title,
-        ]);
+        duplicatedata.push([k++, originalData.response.data.records[i].title]);
       }
     }
   } else {
@@ -37,18 +34,14 @@ const getTableData = async () => {
     errormtag.textContent = originalData.error.message;
     document.body.appendChild(errormtag);
   }
-  console.log(duplicatedata);
   return duplicatedata;
 };
 
 const createTable = async () => {
   duplicatearraydata = await getTableData();
 
-  console.log(duplicatearraydata[0], "----+++++++");
-  var table = document.createElement("table");
-  document.body.appendChild(table);
-
-  for (let i = 0; i < duplicatearraydata.length; i++) {
+  var table = document.querySelector(".pagination");
+  for (let i = 0; i < document.getElementById("rows").value; i++) {
     var tr = document.createElement("tr");
     table.appendChild(tr);
     for (var j = 0; j < duplicatearraydata[i].length; j++) {
@@ -59,10 +52,10 @@ const createTable = async () => {
   }
 };
 
-createTable();
+document.getElementById("rows").addEventListener("change", createTable);
 
 function searchFilter() {
-  var tr, td, searchvalue, textValue;
+  var tr, searchvalue, textValue;
   searchvalue = document
     .getElementById("myInput")
     .value.toUpperCase()
