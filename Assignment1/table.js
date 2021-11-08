@@ -12,6 +12,8 @@ var table = document.querySelector(".pagination");
 const previous = document.querySelector(".previous");
 const next = document.querySelector(".next");
 
+var x = parseInt(document.getElementById("rows").value);
+
 const responseData = async () => {
   try {
     const response = await axios.get(
@@ -29,11 +31,7 @@ const convertResponse = async () => {
   var k = 1;
   if (originalData.isAuthError === true) {
     for (let i = 0; i < duplicateN; i++) {
-      for (
-        let i = 0;
-        i < Object.keys(originalData.response.data.records).length;
-        i++
-      ) {
+      for (let i = 0; i < originalData.response.data.records.length; i++) {
         duplicatedata.push([k++, originalData.response.data.records[i].title]);
       }
     }
@@ -68,29 +66,37 @@ async function setDataOnLoad() {
 
 setDataOnLoad();
 
-var x = document.getElementById("rows").value;
-
-// rows.addEventListener("change", () => {
-//   x = document.getElementById("rows").value;
-//   console.log(x);
-// });
+rows.addEventListener("change", () => {
+  x = parseInt(document.getElementById("rows").value);
+  console.log(typeof x);
+});
 
 next.addEventListener("click", () => {
-  tablerowlen == tablerowdata.length - 5
+  console.log(tablerowlen == tablerowdata.length - x);
+  tablerowlen == tablerowdata.length - x
     ? (tablerowlen = 0)
-    : (tablerowlen += 5);
+    : (tablerowlen += x);
   table.innerHTML = "";
-  for (let i = tablerowlen; i < tablerowlen + 5; i++) {
+  for (let i = tablerowlen; i < tablerowlen + x; i++) {
+    console.log(tablerowlen[i], "----");
+    if (i > tablerowdata.length) {
+      i = 0;
+      tablerowlen = 0;
+    }
     table.appendChild(tablerowdata[i]);
   }
 });
 
 previous.addEventListener("click", () => {
   tablerowlen == 0
-    ? (tablerowlen = tablerowdata.length - 5)
-    : (tablerowlen -= 5);
+    ? (tablerowlen = tablerowdata.length - x)
+    : (tablerowlen -= x);
   table.innerHTML = "";
-  for (let i = tablerowlen; i < tablerowlen + 5; i++) {
+  for (let i = tablerowlen; i < tablerowlen + x; i++) {
+    if (i > tablerowdata.length) {
+      i = 0;
+      tablerowlen = 0;
+    }
     table.appendChild(tablerowdata[i]);
   }
 });
