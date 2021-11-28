@@ -49,11 +49,16 @@ const dataReducers = (state = initialvalue, action) => {
         searchActive: true,
       };
     case "ROW_FILTER":
+      let rowFilterData = [];
+      if (state.searchActive === true) {
+        rowFilterData = state.searchFilter;
+      } else {
+        rowFilterData = filterRow(parseInt(action.payload), state.posts);
+      }
       return {
         ...state,
-        rowFilter: filterRow(parseInt(action.payload), state.posts),
+        rowFilter: rowFilterData,
         rows: parseInt(action.payload),
-        searchActive: false,
       };
     default:
       return state;
