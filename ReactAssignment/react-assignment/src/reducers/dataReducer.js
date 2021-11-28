@@ -11,7 +11,9 @@ const filterRow = (numbRows, postsdata) => {
   let filteredRowList = [];
   if (postsdata.length !== 0) {
     for (let i = 0; i < numbRows; i++) {
-      filteredRowList.push(postsdata[i]);
+      if (i < postsdata.length) {
+        filteredRowList.push(postsdata[i]);
+      }
     }
   }
   return filteredRowList;

@@ -38,7 +38,7 @@ class TableRows extends React.Component {
 }
 
 const mapStateToProps = (state) => {
-  // console.log(state.data.test);
+  console.log(state.data.rowFilter);
   return { posts: state.data.rowFilter };
 };
 
