@@ -5,7 +5,6 @@ let initialvalue = {
   page: 1,
   rows: 5,
   searchActive: false,
-  test: [],
 };
 
 const filterRow = (numbRows, postsdata) => {

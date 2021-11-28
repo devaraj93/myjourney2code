@@ -117,7 +117,6 @@ function searchFilter() {
       console.log(textValue);
       console.log(searchvalue);
       table.appendChild(tablerowdata[i]);
-      // tr[i].style.display = "";
     } else {
       // tr[i].style.display = "none";
     }
