@@ -1,11 +1,14 @@
 import React from "react";
 
+import { connect } from "react-redux";
+import { searchValue } from "../actions";
+
 class SearchBar extends React.Component {
   state = { term: "" };
 
   onInputChange = (event) => {
     this.setState({ term: event.target.value });
-    console.log(this.state.term);
+    this.props.searchValue(event.target.value);
   };
 
   render() {
@@ -22,4 +25,8 @@ class SearchBar extends React.Component {
   }
 }
 
-export default SearchBar;
+const mapStateToProps = (state) => {
+  return { posts: state.posts };
+};
+
+export default connect(mapStateToProps, { searchValue })(SearchBar);

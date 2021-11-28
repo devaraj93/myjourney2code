@@ -1,31 +1,45 @@
 import React from "react";
-// import { connect } from "react-redux";
+import { connect } from "react-redux";
+import { fetchPosts } from "../actions";
 
-const TableRows = ({ tableData }) => {
-  const processedData = tableData.map((data) => {
-    return (
-      <tr key={`trid${data[0]}`}>
-        <td>{data[0]}</td>
-        <td>{data[1]}</td>
-        <td>
-          <i className="trash icon"></i>
-        </td>
-      </tr>
-    );
-  });
+class TableRows extends React.Component {
+  componentDidMount() {
+    this.props.fetchPosts();
+  }
 
-  return (
-    <table className="ui celled table">
-      <thead>
-        <tr>
-          <th>ID</th>
-          <th>Book-Title</th>
-          <th>Action</th>
+  renderList() {
+    return this.props.posts.map((post) => {
+      return (
+        <tr key={post.id}>
+          <td>{post.id}</td>
+          <td>{post.body}</td>
+          <td>
+            <i className="trash icon"></i>
+          </td>
         </tr>
-      </thead>
-      <tbody>{processedData}</tbody>
-    </table>
-  );
+      );
+    });
+  }
+
+  render() {
+    return (
+      <table className="ui celled table">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Book-Title</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>{this.renderList()}</tbody>
+      </table>
+    );
+  }
+}
+
+const mapStateToProps = (state) => {
+  // console.log(state.data.test);
+  return { posts: state.data.rowFilter };
 };
 
-export default TableRows;
+export default connect(mapStateToProps, { fetchPosts })(TableRows);

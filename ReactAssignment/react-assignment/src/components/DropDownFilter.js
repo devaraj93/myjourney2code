@@ -1,22 +1,34 @@
 import React from "react";
+import { connect } from "react-redux";
 
-const DropDownFilter = ({ dd_list }) => {
-  let ddownList = dd_list.map((list) => {
+import { changeRowsToDisplay } from "../actions";
+
+class DropDownFilter extends React.Component {
+  renderDropDownList() {
+    return this.props.dd_list.map((list) => {
+      return (
+        <option key={`k-${list.value}`} value={list.value.toString()}>
+          {list.value}
+        </option>
+      );
+    });
+  }
+  render() {
     return (
-      <option key={`k-${list.value}`} value={list.value.toString()}>
-        {list.value}
-      </option>
+      <select
+        className="ui dropdown"
+        onChange={(event) => this.props.changeRowsToDisplay(event.target.value)} //set number of pages to redux state
+      >
+        {this.renderDropDownList()}
+      </select>
     );
-  });
+  }
+}
 
-  return (
-    <select
-      className="ui dropdown"
-      onChange={(event) => console.log("Value Click", event.target.value)}
-    >
-      {ddownList}
-    </select>
-  );
+const mapStateToProps = (state) => {
+  return { posts: state.posts };
 };
 
-export default DropDownFilter;
+export default connect(mapStateToProps, { changeRowsToDisplay })(
+  DropDownFilter
+);
