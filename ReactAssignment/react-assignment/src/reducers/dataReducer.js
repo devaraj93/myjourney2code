@@ -5,6 +5,7 @@ let initialvalue = {
   page: 1,
   rows: 5,
   searchActive: false,
+  forwardClick: false,
 };
 
 const filterRow = (numbRows, postsdata) => {
@@ -30,6 +31,10 @@ const filterSearch = (searchChar, originalData) => {
   return filteredSearchList;
 };
 
+const createNext = () => {
+  console.log("Reducer called!!!!");
+};
+
 const dataReducers = (state = initialvalue, action) => {
   switch (action.type) {
     case "FETCH_POSTS":
@@ -50,15 +55,19 @@ const dataReducers = (state = initialvalue, action) => {
       };
     case "ROW_FILTER":
       let rowFilterData = [];
-      if (state.searchActive === true) {
-        rowFilterData = state.searchFilter;
-      } else {
-        rowFilterData = filterRow(parseInt(action.payload), state.posts);
-      }
+      state.searchActive === true
+        ? (rowFilterData = state.searchFilter)
+        : (rowFilterData = filterRow(parseInt(action.payload), state.posts));
       return {
         ...state,
         rowFilter: rowFilterData,
         rows: parseInt(action.payload),
+      };
+    case "FORWARD":
+      console.log("Going Forward");
+      return {
+        ...state,
+        forwardClick: true,
       };
     default:
       return state;

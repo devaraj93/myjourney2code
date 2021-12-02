@@ -13,7 +13,7 @@ class SearchBar extends React.Component {
 
   render() {
     return (
-      <div className="ui input focus">
+      <div className="ui fluid icon input">
         <DebounceInput
           minLength={2}
           debounceTimeout={300}
