@@ -1,0 +1,9 @@
+data-
+controller()
+rendering
+
+
+
+filterePosts=75;
+page=10;
+rows=5;
