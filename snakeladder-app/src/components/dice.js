@@ -4,22 +4,28 @@ import "../sl.css";
 import { rolledValue } from "../actions";
 import { connect } from "react-redux";
 
-function Dice() {
+const Dice = (props) => {
   return (
     <div>
-      <img alt="d" src={`images/dice${4}.png`} style={{ width: "60px" }} />
+      <img
+        alt="d"
+        src={`images/dice${props.data === 0 ? 6 : props.data}.png`}
+        style={{ width: "60px" }}
+      />
       <div>
-        <button className="ui button" onClick={() => rolledValue(randomNum())}>
+        <button
+          className="ui button"
+          onClick={() => props.rolledValue(randomNum())}
+        >
           Roll
         </button>
       </div>
     </div>
   );
-}
+};
 
 const mapStateToProps = (state) => {
-  console.log(state, "1");
-  return { data: state.diceRolledValue };
+  return { data: state.data.diceRolledValue };
 };
 
 export default connect(mapStateToProps, { rolledValue })(Dice);

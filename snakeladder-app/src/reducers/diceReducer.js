@@ -6,11 +6,13 @@ let defaultState = {
 };
 
 const diceReducer = (state = defaultState, action) => {
-  console.log(action.type);
   switch (action.type) {
     case "DICE_ROLLED":
-      console.log(...state, action.payload);
-      return { ...state, diceRolledValue: action.payload };
+      return {
+        ...state,
+        diceRolledValue: action.payload,
+        playerUpdatePos: state.playerUpdatePos + action.payload,
+      };
     default:
       return state;
   }
