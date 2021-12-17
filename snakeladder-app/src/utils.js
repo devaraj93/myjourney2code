@@ -6,15 +6,6 @@ export function createTiles(position) {
   let tiles = [];
   let tileNum = 1;
   for (let i = 1; i <= 25; i++) {
-    // if (position === i) {
-    //   tiles.push(
-    //     <div className="tile" key={tileNum}>
-    //       <div className="tileNumber">{tileNum}</div>
-    //       <div className="player-container"></div>
-    //       <i className="user icon" style={{ color: "#ff5f5f" }}></i>
-    //     </div>
-    //   );
-    // } else {
     tiles.push(
       <div className="tile" key={tileNum}>
         <div className="tileNumber">{tileNum}</div>
@@ -24,7 +15,7 @@ export function createTiles(position) {
         ) : null}
       </div>
     );
-    // }
+
     tileNum += 1;
   }
   return tiles;
