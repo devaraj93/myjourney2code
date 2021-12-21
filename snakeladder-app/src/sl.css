@@ -1,0 +1,16 @@
+.board {
+  width: 600px;
+  display: flex;
+  flex-wrap: wrap;
+  flex-flow: row wrap-reverse;
+  align-items: center;
+  align-content: center;
+}
+
+.tile {
+  width: 100px;
+  height: 100px;
+  background: grey;
+  margin: 2px;
+  float: right;
+}

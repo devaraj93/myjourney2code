@@ -17,7 +17,7 @@ class DropDownFilter extends React.Component {
     return (
       <select
         className="ui dropdown"
-        onChange={(event) => this.props.changeRowsToDisplay(event.target.value)} //set number of pages to redux state
+        onChange={(event) => changeRowsToDisplay(event.target.value)} //set number of pages to redux state
       >
         {this.renderDropDownList()}
       </select>
